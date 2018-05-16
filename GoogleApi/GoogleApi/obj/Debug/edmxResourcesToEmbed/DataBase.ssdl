@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="miasta">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="obiekty">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nazwa" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="id_panstwa" Type="int" />
+    <Property Name="id_miasta" Type="int" />
+    <Property Name="ulica" Type="varchar" MaxLength="100" />
+    <Property Name="nr_domu" Type="int" />
+    <Property Name="g_szerokosc" Type="float" />
+    <Property Name="g_dlugosc" Type="float" />
+  </EntityType>
+  <EntityType Name="panstwa">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="trasa_naglowek">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nazwa" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="id_uzytkownika" Type="int" />
+    <Property Name="data_dodania" Type="date" />
+  </EntityType>
+  <EntityType Name="trasa_obiekt">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_trasa" Type="int" />
+    <Property Name="id_obiekt" Type="int" />
+    <Property Name="kolejnosc" Type="int" />
+  </EntityType>
+  <EntityType Name="uprawnienia">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nazwa" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="uzytkownicy">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="imie" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="nazwisko" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="haslo" Type="varchar" MaxLength="50" />
+    <Property Name="id_uprawnienia" Type="int" />
+  </EntityType>
+  <Association Name="FK__obiekty__id_mias__2D27B809">
+    <End Role="miasta" Type="Self.miasta" Multiplicity="0..1" />
+    <End Role="obiekty" Type="Self.obiekty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="miasta">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="obiekty">
+        <PropertyRef Name="id_miasta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__obiekty__id_pans__2C3393D0">
+    <End Role="panstwa" Type="Self.panstwa" Multiplicity="0..1" />
+    <End Role="obiekty" Type="Self.obiekty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="panstwa">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="obiekty">
+        <PropertyRef Name="id_panstwa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__trasa_nag__id_uz__30F848ED">
+    <End Role="uzytkownicy" Type="Self.uzytkownicy" Multiplicity="0..1" />
+    <End Role="trasa_naglowek" Type="Self.trasa_naglowek" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="uzytkownicy">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="trasa_naglowek">
+        <PropertyRef Name="id_uzytkownika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__trasa_obi__id_ob__35BCFE0A">
+    <End Role="obiekty" Type="Self.obiekty" Multiplicity="0..1" />
+    <End Role="trasa_obiekt" Type="Self.trasa_obiekt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="obiekty">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="trasa_obiekt">
+        <PropertyRef Name="id_obiekt" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__trasa_obi__id_tr__34C8D9D1">
+    <End Role="trasa_naglowek" Type="Self.trasa_naglowek" Multiplicity="0..1" />
+    <End Role="trasa_obiekt" Type="Self.trasa_obiekt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="trasa_naglowek">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="trasa_obiekt">
+        <PropertyRef Name="id_trasa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__uzytkowni__id_up__2E1BDC42">
+    <End Role="uprawnienia" Type="Self.uprawnienia" Multiplicity="0..1" />
+    <End Role="uzytkownicy" Type="Self.uzytkownicy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="uprawnienia">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="uzytkownicy">
+        <PropertyRef Name="id_uprawnienia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DataBaseModelStoreContainer">
+    <EntitySet Name="miasta" EntityType="Self.miasta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="obiekty" EntityType="Self.obiekty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="panstwa" EntityType="Self.panstwa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="trasa_naglowek" EntityType="Self.trasa_naglowek" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="trasa_obiekt" EntityType="Self.trasa_obiekt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="uprawnienia" EntityType="Self.uprawnienia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="uzytkownicy" EntityType="Self.uzytkownicy" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__obiekty__id_mias__2D27B809" Association="Self.FK__obiekty__id_mias__2D27B809">
+      <End Role="miasta" EntitySet="miasta" />
+      <End Role="obiekty" EntitySet="obiekty" />
+    </AssociationSet>
+    <AssociationSet Name="FK__obiekty__id_pans__2C3393D0" Association="Self.FK__obiekty__id_pans__2C3393D0">
+      <End Role="panstwa" EntitySet="panstwa" />
+      <End Role="obiekty" EntitySet="obiekty" />
+    </AssociationSet>
+    <AssociationSet Name="FK__trasa_nag__id_uz__30F848ED" Association="Self.FK__trasa_nag__id_uz__30F848ED">
+      <End Role="uzytkownicy" EntitySet="uzytkownicy" />
+      <End Role="trasa_naglowek" EntitySet="trasa_naglowek" />
+    </AssociationSet>
+    <AssociationSet Name="FK__trasa_obi__id_ob__35BCFE0A" Association="Self.FK__trasa_obi__id_ob__35BCFE0A">
+      <End Role="obiekty" EntitySet="obiekty" />
+      <End Role="trasa_obiekt" EntitySet="trasa_obiekt" />
+    </AssociationSet>
+    <AssociationSet Name="FK__trasa_obi__id_tr__34C8D9D1" Association="Self.FK__trasa_obi__id_tr__34C8D9D1">
+      <End Role="trasa_naglowek" EntitySet="trasa_naglowek" />
+      <End Role="trasa_obiekt" EntitySet="trasa_obiekt" />
+    </AssociationSet>
+    <AssociationSet Name="FK__uzytkowni__id_up__2E1BDC42" Association="Self.FK__uzytkowni__id_up__2E1BDC42">
+      <End Role="uprawnienia" EntitySet="uprawnienia" />
+      <End Role="uzytkownicy" EntitySet="uzytkownicy" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

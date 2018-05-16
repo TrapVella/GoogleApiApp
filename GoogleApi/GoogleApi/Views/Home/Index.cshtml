@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<<title>@ViewBag.Title</title>
+
+<h2 style="background-color: Yellow;color: Blue; text-align: center; font-style: oblique">Wielowarstwowe aplikacje</h2>
+<fieldset>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <div>
+        @using (Ajax.BeginForm("AddPointResult", "AddPoint",
+                    new AjaxOptions { UpdateTargetId = "pointDetails" }))
+    {
+        <div id="pointDetails"></div>
+        <input type="text" name="XY" id="XY" style="width:300px" TextChanged="textChangedEventHandler"/>
+        <button name="button" value="Add Position">AddPosition</button>
+}
+    </div>
+
+    <div id="googleMap" style="height:400px;width:100%;"></div>
+
+
+    <script>
+        // Note: This example requires that you consent to location sharing when
+        // prompted by your browser. If you see the error "The Geolocation service
+        // failed.", it means you probably did not give permission for the browser to
+        // locate you.
+        var map, infoWindow;
+        var markers = [];
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('googleMap'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 15
+            });
+            infoWindow = new google.maps.InfoWindow;
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        title: "Hello World!"
+                    });
+                    map.addListener('rightclick', function (e) {
+                        deleteMarkers();
+                        placeMarker(e.latLng, map);
+                        document.getElementById("XY").value = e.latLng;
+                    });
+
+                    function placeMarker(position, map) {
+                        var marker = new google.maps.Marker({
+                            position: position,
+                            map: map
+                        });
+
+                        map.panTo(position);
+                        Object.position = position;
+                        markers.push(marker);
+                    }
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Twoja lokalizacja.');
+                    infoWindow.open(map);
+                    marker.setMap(map)
+                    map.setCenter(pos);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8wrW2nAK0r3miJ_4OWXJBfkPOzGca0Wc&callback=initMap"></script>
+</fieldset>
+<footer>
+    <p style="background-color: Yellow; font-weight: bold; color:blue; text-align: center; font-style: oblique">© @DateTime.Now.ToLocalTime()</p> @*Add Date Time*@
+</footer>  

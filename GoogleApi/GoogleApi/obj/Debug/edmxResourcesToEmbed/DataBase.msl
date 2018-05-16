@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataBaseModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="miastas">
+      <EntityTypeMapping TypeName="DataBaseModel.miasta">
+        <MappingFragment StoreEntitySet="miasta">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="obiekties">
+      <EntityTypeMapping TypeName="DataBaseModel.obiekty">
+        <MappingFragment StoreEntitySet="obiekty">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+          <ScalarProperty Name="id_panstwa" ColumnName="id_panstwa" />
+          <ScalarProperty Name="id_miasta" ColumnName="id_miasta" />
+          <ScalarProperty Name="ulica" ColumnName="ulica" />
+          <ScalarProperty Name="nr_domu" ColumnName="nr_domu" />
+          <ScalarProperty Name="g_szerokosc" ColumnName="g_szerokosc" />
+          <ScalarProperty Name="g_dlugosc" ColumnName="g_dlugosc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="panstwas">
+      <EntityTypeMapping TypeName="DataBaseModel.panstwa">
+        <MappingFragment StoreEntitySet="panstwa">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trasa_naglowek">
+      <EntityTypeMapping TypeName="DataBaseModel.trasa_naglowek">
+        <MappingFragment StoreEntitySet="trasa_naglowek">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+          <ScalarProperty Name="id_uzytkownika" ColumnName="id_uzytkownika" />
+          <ScalarProperty Name="data_dodania" ColumnName="data_dodania" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trasa_obiekt">
+      <EntityTypeMapping TypeName="DataBaseModel.trasa_obiekt">
+        <MappingFragment StoreEntitySet="trasa_obiekt">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_trasa" ColumnName="id_trasa" />
+          <ScalarProperty Name="id_obiekt" ColumnName="id_obiekt" />
+          <ScalarProperty Name="kolejnosc" ColumnName="kolejnosc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uprawnienias">
+      <EntityTypeMapping TypeName="DataBaseModel.uprawnienia">
+        <MappingFragment StoreEntitySet="uprawnienia">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uzytkownicies">
+      <EntityTypeMapping TypeName="DataBaseModel.uzytkownicy">
+        <MappingFragment StoreEntitySet="uzytkownicy">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="imie" ColumnName="imie" />
+          <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="haslo" ColumnName="haslo" />
+          <ScalarProperty Name="id_uprawnienia" ColumnName="id_uprawnienia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
